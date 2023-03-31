@@ -6,6 +6,7 @@ GitHub link for continued progress: https://github.com/mikey2fye/comp_sci_2_proj
 
 '''
 import tkinter as tk
+import sqlite3
 
 # Create the main window
 root = tk.Tk()
@@ -38,8 +39,6 @@ submit_button.pack()
 # Run the main loop
 root.mainloop()
 
-import sqlite3
-
 # Connect to the database or create a new one if it doesn't exist
 conn = sqlite3.connect('user_info.db')
 
@@ -59,6 +58,28 @@ c.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", ('ja
 
 # Save the changes to the database
 conn.commit()
+
+# Connect to the database
+conn = sqlite3.connect('user_info.db')
+
+# Create a cursor object
+c = conn.cursor()
+
+# Insert a new user into the database
+c.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", ('new_user', 'new_password', 'new_user@example.com'))
+
+# Save the changes to the database
+conn.commit()
+# Connect to the database
+conn = sqlite3.connect('user_info.db')
+
+# Create a cursor object
+c = conn.cursor()
+
+# Retrieve user information from the database
+c.execute("SELECT * FROM users WHERE username=?", ('john',))
+user = c.fetchone()
+print(user)
 
 # Close the connection to the database
 conn.close()
